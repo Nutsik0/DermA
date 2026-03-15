@@ -6,8 +6,8 @@ cursor = conn.cursor()
 cursor.executescript("""
 CREATE TABLE IF NOT EXISTS conditions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    description TEXT
+    condition_name TEXT NOT NULL,
+    condition_description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS products (
@@ -39,7 +39,7 @@ conditions_data = [
 ]
 
 cursor.executemany(
-"INSERT INTO conditions (name, description) VALUES (?,?)",
+"INSERT INTO conditions (condition_name,condition_description) VALUES (?,?)",
 conditions_data
 )
 
