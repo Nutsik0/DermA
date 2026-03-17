@@ -1,6 +1,6 @@
 import sqlite3
 import product
-from database_helpers import find_conditions
+from database_helpers import find_conditions,get_all_conditions,get_products
 
 
 
@@ -27,6 +27,47 @@ def check_condition():
             print(condition.condition_name)
     else:
         print("No matching conditions found for these symptoms.")
+        
+
+def view_all_conditions():
+    conditions = get_all_conditions()
+    print("All skin conditions in our system are : ")
+    for condition in conditions:
+        print(f"{condition.condition_name} - {condition.condition_description}")
+    
+
+def show_products():
+    conditions = get_all_conditions()
+    print("--- Skin Conditions ---")
+    for num,con in enumerate(conditions, start=1):
+        print(f"{num}. {con.condition_name}")
+
+    choice_str = input("Enter the number of the condition to see products: ").strip()  
+
+    if not choice_str.isdigit():
+        print("Please enter a valid number.")
+        return
+
+    choice_num = int(choice_str)
+
+    if choice_num < 1 or choice_num > len(conditions):
+        print("Number out of range. Please try again.")
+        return
+    
+    selected_condition = conditions[int(choice_str)-1]
+
+    products = get_products(selected_condition.id)
+    if not products: 
+        print("No products found for this condition.") 
+        return
+    
+    print(f"Recommended products for {selected_condition.condition_name}:") 
+
+    for p in products: 
+        print("-------------------------")
+        print(p)
+        
+
 
 def menu():
     while True:   
@@ -68,4 +109,4 @@ def menu():
         except ValueError:
             print("Invalid input. Please enter a number between 1 and 8.")
 
-check_condition()
+show_products()
