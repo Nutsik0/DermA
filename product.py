@@ -8,6 +8,7 @@ class Product():
         self.usage_time = usage_time
         self.frequency = frequency
         self.instructions = instructions
+        
 
     def __str__(self):
         return (f"{self.product_name} by {self.brand} ({self.product_type})\n"
@@ -32,3 +33,13 @@ class Condition():
     
     def __str__(self):
         return f"{self.condition_name} - {self.condition_description}"
+
+class WeeklyPlan:
+    def __init__(self, day, time_of_day, product):
+        self.day = day
+        self.time_of_day = time_of_day
+        self.product = product 
+
+    def __str__(self):
+        return (f"{self.day} ({self.time_of_day})\n"
+                f"{self.product}")

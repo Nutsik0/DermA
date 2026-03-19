@@ -81,7 +81,18 @@ symptoms_data = [
 
 cursor.executemany("""INSERT INTO symptoms (symptom_name,condition_id) VALUES(?,?)""", symptoms_data)
 
+cursor.executescript("""
+    CREATE TABLE IF NOT EXISTS weekly_plans (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    day TEXT,
+    time_of_day TEXT,
+    product_id INTEGER
+);
+""")
+
+
 conn.commit()
 conn.close()
 
-print("DermAssist database created successfully.")
+
+

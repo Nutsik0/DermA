@@ -1,5 +1,5 @@
 import sqlite3
-from product import Condition,Product,Symptom
+from product import Condition,Product,Symptom,WeeklyPlan
 
 
 def find_conditions(symptoms):
@@ -84,3 +84,23 @@ def get_products(condition_id):
 
     return products
 
+def get_weekly_plan():
+    conn = sqlite3.connect("dermassist.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id,day,time_of_day,product_id FROM weekly_plans")
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    weekly_plans= []
+    for row in rows:
+        weekly_plan = WeeklyPlan(
+            row[0], #id
+            row[1], #day
+            row[2], #rime_of_day
+            row[3]  #product_id
+        )
+        weekly_plans.append(weekly_plan)
+
+    return weekly_plans
